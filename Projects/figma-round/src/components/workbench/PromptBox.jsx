@@ -35,13 +35,13 @@ export default function PromptBox({ onSubmit }) {
         style={{
           width: '730px',
           height: '180px',
-          backgroundColor: '#1C1C1C',
-          border: '1px solid #252525',
+          backgroundColor: 'var(--prompt-outer-bg)',
+          border: '1px solid var(--prompt-outer-border)',
           borderRadius: '25px',
           position: 'relative',
           boxSizing: 'border-box',
           overflow: 'hidden',
-          boxShadow: '0px 10px 40px 0px rgba(0, 0, 0, 0.45)', // #00000073 shadow
+          boxShadow: 'var(--prompt-shadow)',
         }}
       >
         {/* Prompt Box container (Rectangle 4 / Rectangle 3 depending on focus) */}
@@ -52,8 +52,8 @@ export default function PromptBox({ onSubmit }) {
             left: '5px',
             width: '720px',
             height: '120px',
-            backgroundColor: isFocused ? '#171C25' : '#0F0F0F', // Rectangle 3 vs 4
-            border: isFocused ? '1px solid #232734' : '1px solid #1B1B1B', // Rectangle 3 vs 4
+            backgroundColor: isFocused ? 'var(--prompt-inner-focus-bg)' : 'var(--prompt-inner-bg)',
+            border: isFocused ? '1px solid var(--prompt-inner-focus-border)' : '1px solid var(--prompt-inner-border)',
             borderRadius: '20px',
             boxSizing: 'border-box',
             transition: 'all 0.2s ease',
@@ -78,7 +78,7 @@ export default function PromptBox({ onSubmit }) {
               background: 'transparent',
               border: 'none',
               outline: 'none',
-              color: '#ffffff',
+              color: 'var(--text-primary)',
               fontFamily: 'Inter, system-ui, sans-serif',
               fontWeight: '400',
               fontSize: '18px',
@@ -100,7 +100,7 @@ export default function PromptBox({ onSubmit }) {
               alignItems: 'center',
               justifyContent: 'center',
               cursor: 'pointer',
-              color: '#FFFFFF',
+              color: 'var(--text-primary)',
               fontSize: '20px',
               fontWeight: 'bold',
               padding: 0,
@@ -124,8 +124,8 @@ export default function PromptBox({ onSubmit }) {
               width: '40px',
               height: '40px',
               borderRadius: '50%',
-              backgroundColor: '#FFFFFF',
-              border: '1px solid #212121',
+              backgroundColor: 'var(--text-primary)',
+              border: '1px solid var(--border-color)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -144,7 +144,7 @@ export default function PromptBox({ onSubmit }) {
           >
             <span
               style={{
-                color: '#000000',
+                color: 'var(--bg-card)',
                 fontSize: '16px',
                 fontWeight: 'bold',
                 lineHeight: '1',
@@ -168,8 +168,8 @@ export default function PromptBox({ onSubmit }) {
             width: '96px',
             height: '30px',
             borderRadius: '100px',
-            border: '1px solid #252525',
-            backgroundColor: 'rgba(255, 255, 255, 0.02)',
+            border: '1px solid var(--prompt-chip-border)',
+            backgroundColor: 'var(--prompt-chip-bg)',
             color: 'var(--text-secondary)',
             fontSize: '11px',
             fontWeight: '500',
@@ -182,10 +182,10 @@ export default function PromptBox({ onSubmit }) {
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.borderColor = 'var(--border-hover)'
-            e.currentTarget.style.color = '#ffffff'
+            e.currentTarget.style.color = 'var(--text-primary)'
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.borderColor = '#252525'
+            e.currentTarget.style.borderColor = 'var(--prompt-chip-border)'
             e.currentTarget.style.color = 'var(--text-secondary)'
           }}
         >
@@ -202,8 +202,8 @@ export default function PromptBox({ onSubmit }) {
             width: '147px',
             height: '30px',
             borderRadius: '100px',
-            border: '1px solid #252525',
-            backgroundColor: 'rgba(255, 255, 255, 0.02)',
+            border: '1px solid var(--prompt-chip-border)',
+            backgroundColor: 'var(--prompt-chip-bg)',
             color: 'var(--text-secondary)',
             fontSize: '11px',
             fontWeight: '500',
@@ -216,10 +216,10 @@ export default function PromptBox({ onSubmit }) {
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.borderColor = 'var(--border-hover)'
-            e.currentTarget.style.color = '#ffffff'
+            e.currentTarget.style.color = 'var(--text-primary)'
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.borderColor = '#252525'
+            e.currentTarget.style.borderColor = 'var(--prompt-chip-border)'
             e.currentTarget.style.color = 'var(--text-secondary)'
           }}
         >
@@ -230,13 +230,13 @@ export default function PromptBox({ onSubmit }) {
         <div
           style={{
             position: 'absolute',
-            top: '140px', // 588 - 448 = 140px
-            left: '627px', // 1118 - 491 = 627px
+            top: '140px',
+            left: '627px',
             width: '40px',
             height: '24px',
             borderRadius: '12px',
-            backgroundColor: 'rgba(255, 255, 255, 0.04)',
-            color: '#505050',
+            backgroundColor: 'var(--prompt-shortcut-bg)',
+            color: 'var(--text-placeholder)',
             fontSize: '11px',
             fontWeight: '600',
             display: 'flex',
@@ -261,15 +261,15 @@ export default function PromptBox({ onSubmit }) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: '#505050',
+            color: 'var(--text-placeholder)',
             cursor: 'pointer',
             transition: 'color 0.2s',
             padding: 0,
             backgroundColor: 'transparent',
             border: 'none',
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = '#ffffff')}
-          onMouseLeave={(e) => (e.currentTarget.style.color = '#505050')}
+          onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-primary)')}
+          onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-placeholder)')}
           title="Search tickers"
         >
           <svg

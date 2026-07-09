@@ -1,7 +1,13 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import Sidebar from '../sidebar/Sidebar'
+import ThemeToggle from '../shared/ThemeToggle'
+import useTheme from '../../context/useTheme'
 
 export default function AppLayout() {
+  const location = useLocation()
+  const { theme } = useTheme()
+  const isLandingPage = location.pathname === '/workbench' || location.pathname === '/' || ['/home', '/chats', '/projects', '/watchlist', '/workflows'].includes(location.pathname)
+
   return (
     <div
       style={{
@@ -9,8 +15,9 @@ export default function AppLayout() {
         flexDirection: 'row',
         height: '100vh',
         overflow: 'hidden',
-        backgroundColor: '#0a0a0c',
+        backgroundColor: 'var(--bg-app, #FAFAF8)',
         position: 'relative',
+        transition: 'background-color 0.35s ease',
       }}
     >
       <Sidebar />
@@ -21,35 +28,49 @@ export default function AppLayout() {
           background: 'transparent',
           position: 'relative',
           overflow: 'hidden',
+          transition: 'background-color 0.35s ease',
         }}
       >
-        {/* Figma Background Earth & Rectangle 14 Layer */}
         <div
           style={{
             position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            pointerEvents: 'none',
-            zIndex: 0,
-            overflow: 'hidden',
+            top: '12px',
+            right: '16px',
+            zIndex: 20,
           }}
         >
-          {/* Earth Image (image.png layout) */}
-          <img
-            src="/image.png"
-            alt="Earth Globe"
+          <ThemeToggle />
+        </div>
+
+        {/* Figma Background Earth & Rectangle 14 Layer */}
+        {!isLandingPage && (
+          <div
             style={{
               position: 'absolute',
-              width: '1107px',
-              height: '618px',
-              bottom: '-345px', // 1024 - 751 = 273px visible. 618 - 273 = 345px overflow.
-              left: 'calc(50% - 553.5px)', // Center horizontally in the main area
-              clipPath: 'circle(50% at 50% 100%)', // Mathematically key out the white background of the image
-              opacity: 1,
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              pointerEvents: 'none',
+              zIndex: 0,
+              overflow: 'hidden',
             }}
-          />
+          >
+            {/* Theme background image */}
+            <img
+              src={theme.backgroundImage}
+              alt=""
+              style={{
+                position: 'absolute',
+                inset: 0,
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center',
+                opacity: 1,
+                transition: 'opacity 0.35s ease',
+              }}
+            />
 
           {/* Rectangle 14 (Gradient overlay layout) */}
           <div
@@ -59,11 +80,12 @@ export default function AppLayout() {
               bottom: 0,
               width: '100%',
               height: '197px',
-              background: 'linear-gradient(360deg, #101010 3.55%, rgba(16, 16, 16, 0) 70.79%)',
+              background: 'var(--gradient-overlay)',
               opacity: 1,
             }}
           />
         </div>
+        )}
 
         {/* Page Content Viewport */}
         <div

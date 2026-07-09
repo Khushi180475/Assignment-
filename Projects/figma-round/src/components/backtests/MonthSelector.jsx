@@ -10,7 +10,7 @@ export default function MonthSelector() {
         onMouseEnter={() => setPrevHover(true)}
         onMouseLeave={() => setPrevHover(false)}
         style={{
-          color: prevHover ? '#ffffff' : 'var(--text-secondary)',
+          color: prevHover ? 'var(--text-primary)' : 'var(--text-secondary)',
           fontSize: '18px',
           fontWeight: 'bold',
           padding: '0 4px',
@@ -24,7 +24,7 @@ export default function MonthSelector() {
 
       <span
         style={{
-          color: '#ffffff',
+          color: 'var(--text-primary)',
           fontSize: '13px',
           fontWeight: '500',
           minWidth: '85px',
@@ -38,7 +38,7 @@ export default function MonthSelector() {
         onMouseEnter={() => setNextHover(true)}
         onMouseLeave={() => setNextHover(false)}
         style={{
-          color: nextHover ? '#ffffff' : 'var(--text-secondary)',
+          color: nextHover ? 'var(--text-primary)' : 'var(--text-secondary)',
           fontSize: '18px',
           fontWeight: 'bold',
           padding: '0 4px',

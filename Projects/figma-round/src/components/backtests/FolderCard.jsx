@@ -5,16 +5,16 @@ export default function FolderCard({ name, itemCount = 1, date = 'Mar 2026', isA
   const isSelectedOrHovered = isActive || isHovered
 
   // Active / Hovered colors matching the exact Figma specifications
-  const cardBgColor = isSelectedOrHovered ? '#CADE6A1A' : 'transparent'
-  const cardBorderColor = isSelectedOrHovered ? '#282828' : 'transparent'
-  const folderBgColor = isSelectedOrHovered ? '#CADE6A26' : 'rgba(255, 255, 255, 0.02)'
-  const folderBorderColor = isSelectedOrHovered ? '#CADE6A2E' : 'rgba(255, 255, 255, 0.06)'
-  const flapBorderColor = isSelectedOrHovered ? '#CADE6A' : 'rgba(255, 255, 255, 0.08)'
+  const cardBgColor = isSelectedOrHovered ? 'var(--folder-card-bg-active, #CADE6A1A)' : 'transparent'
+  const cardBorderColor = isSelectedOrHovered ? 'var(--folder-card-border-active, #282828)' : 'transparent'
+  const folderBgColor = isSelectedOrHovered ? 'var(--folder-bg-active, #CADE6A26)' : 'var(--folder-bg-inactive, rgba(255, 255, 255, 0.02))'
+  const folderBorderColor = isSelectedOrHovered ? 'var(--folder-border-active, #CADE6A2E)' : 'var(--folder-border-inactive, rgba(255, 255, 255, 0.06))'
+  const flapBorderColor = isSelectedOrHovered ? 'var(--folder-flap-border-active, #CADE6A)' : 'var(--folder-flap-border-inactive, rgba(255, 255, 255, 0.08))'
   
   // Text colors
-  const itemCountColor = isSelectedOrHovered ? '#CADE6A' : '#888888'
-  const nameColor = isSelectedOrHovered ? '#CADE6A' : '#ffffff'
-  const dateColor = isSelectedOrHovered ? '#667039' : 'rgba(255, 255, 255, 0.4)'
+  const itemCountColor = isSelectedOrHovered ? 'var(--folder-item-active, #CADE6A)' : 'var(--text-secondary, #888888)'
+  const nameColor = isSelectedOrHovered ? 'var(--folder-name-active, #CADE6A)' : 'var(--text-primary, #ffffff)'
+  const dateColor = isSelectedOrHovered ? 'var(--folder-date-active, #667039)' : 'var(--text-meta, rgba(255, 255, 255, 0.4))'
 
   return (
     <div
@@ -219,12 +219,12 @@ export default function FolderCard({ name, itemCount = 1, date = 'Mar 2026', isA
           >
             <defs>
               <linearGradient id="activeFlapGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#CADE6A" stopOpacity="0.5" />
-                <stop offset="100%" stopColor="#CADE6A" stopOpacity="0.08" />
+                <stop offset="0%" stopColor="var(--folder-active-gradient-start, #CADE6A)" stopOpacity="0.5" />
+                <stop offset="100%" stopColor="var(--folder-active-gradient-end, #CADE6A)" stopOpacity="0.08" />
               </linearGradient>
               <linearGradient id="inactiveFlapGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.08" />
-                <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0.01" />
+                <stop offset="0%" stopColor="var(--folder-inactive-stop-1-color, #FFFFFF)" stopOpacity="var(--folder-inactive-stop-1-opacity, 0.08)" />
+                <stop offset="100%" stopColor="var(--folder-inactive-stop-2-color, #FFFFFF)" stopOpacity="var(--folder-inactive-stop-2-opacity, 0.01)" />
               </linearGradient>
             </defs>
             <path

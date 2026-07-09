@@ -3,7 +3,7 @@ export default function SidebarProfile({ collapsed }) {
     <div
       style={{
         padding: '10px 0',
-        borderTop: '1px solid rgba(255, 255, 255, 0.06)',
+        borderTop: '1px solid var(--border-color)',
         display: 'flex',
         alignItems: 'center',
         gap: '12px',
@@ -11,19 +11,31 @@ export default function SidebarProfile({ collapsed }) {
         boxSizing: 'border-box',
       }}
     >
-      {/* Avatar Circle - Sunset Scenery Profile Picture */}
+      {/* Avatar Circle - Initials Circle "CJ" */}
       <div
         style={{
-          width: '32px',
-          height: '32px',
+          width: '28px',
+          height: '28px',
           borderRadius: '50%',
-          backgroundImage: 'url("/profile_pic.jpg")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundColor: '#E3E3E3',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           flexShrink: 0,
-          border: '1px solid rgba(255, 255, 255, 0.15)',
         }}
-      />
+      >
+        <span
+          style={{
+            fontFamily: 'Inter, system-ui, sans-serif',
+            fontSize: '11px',
+            fontWeight: '600',
+            color: '#000000',
+            lineHeight: '1',
+          }}
+        >
+          CJ
+        </span>
+      </div>
 
       {/* User Information */}
       {!collapsed && (
@@ -38,62 +50,55 @@ export default function SidebarProfile({ collapsed }) {
           >
             <span
               style={{
-                color: '#ffffff',
-                fontSize: '13px',
-                fontWeight: '500',
+                fontFamily: 'Inter, system-ui, sans-serif',
+                color: 'var(--text-primary, #000000)',
+                fontSize: '11px',
+                fontWeight: '600',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
               }}
             >
-              Chirag Jalade
+              Chirag S Jalade
             </span>
             <span
               style={{
-                color: 'rgba(255, 255, 255, 0.4)',
-                fontSize: '11px',
+                fontFamily: 'Inter, system-ui, sans-serif',
+                color: 'var(--text-secondary, #CACACA)',
+                fontSize: '9px',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
+                marginTop: '1px',
               }}
             >
               chirag@quanthive.in
             </span>
           </div>
 
-          {/* Logout button with outline SVG */}
+          {/* Three dots option button */}
           <button
-            onClick={() => alert('Simulated log out')}
+            onClick={() => alert('Simulated options menu')}
             style={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              color: 'rgba(255, 255, 255, 0.4)',
+              color: 'var(--text-secondary, #CACACA)',
               cursor: 'pointer',
               padding: '4px',
               borderRadius: '4px',
-              transition: 'all 0.2s ease',
+              transition: 'color 0.2s ease',
               backgroundColor: 'transparent',
               border: 'none',
+              fontSize: '14px',
+              lineHeight: '1',
+              fontWeight: 'bold',
             }}
-            title="Log out"
-            onMouseEnter={(e) => (e.currentTarget.style.color = '#ff4d4f')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255, 255, 255, 0.4)')}
+            title="Options"
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--text-primary, #000000)')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary, #CACACA)')}
           >
-            <svg
-              width="15"
-              height="15"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-              <polyline points="16 17 21 12 16 7" />
-              <line x1="21" y1="12" x2="9" y2="12" />
-            </svg>
+            ⋯
           </button>
         </>
       )}

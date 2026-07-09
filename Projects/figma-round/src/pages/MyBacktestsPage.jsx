@@ -35,7 +35,7 @@ export default function MyBacktestsPage() {
           top: '12px',
           left: '50%',
           transform: 'translateX(-50%)',
-          color: '#888888',
+          color: 'var(--text-secondary)',
           fontSize: '13px',
           display: 'flex',
           alignItems: 'center',
@@ -47,11 +47,11 @@ export default function MyBacktestsPage() {
         <span>Press</span>
         <span
           style={{
-            backgroundColor: '#2b2b2f',
-            border: '1px solid #444444',
+            backgroundColor: 'var(--bg-card)',
+            border: '1px solid var(--border-color)',
             borderRadius: '4px',
             padding: '2px 6px',
-            color: '#ffffff',
+            color: 'var(--text-primary)',
             fontSize: '11px',
             fontFamily: 'monospace',
           }}
@@ -89,7 +89,7 @@ export default function MyBacktestsPage() {
                 fontFamily: '"Times New Roman", Times, Georgia, serif',
                 fontSize: '26px',
                 fontWeight: '400',
-                color: '#CADE6A',
+                color: 'var(--accent)',
                 margin: 0,
               }}
             >
@@ -134,7 +134,7 @@ export default function MyBacktestsPage() {
                 fontFamily: '"Times New Roman", Times, Georgia, serif',
                 fontSize: '24px',
                 fontWeight: '400',
-                color: '#CADE6A',
+                color: 'var(--accent)',
                 margin: '0 0 16px 0',
                 flexShrink: 0,
               }}
@@ -147,13 +147,13 @@ export default function MyBacktestsPage() {
                 width: '100%',
                 flex: 1,
                 maxHeight: '520px',
-                backgroundColor: '#25252580',
+                backgroundColor: 'var(--compare-bench-bg, #25252580)',
                 backdropFilter: 'blur(80px)',
                 WebkitBackdropFilter: 'blur(80px)',
                 borderRadius: '16px',
                 position: 'relative',
                 overflow: 'hidden',
-                border: 'none',
+                border: '1px solid var(--border-color)',
                 marginBottom: '24px',
               }}
             />

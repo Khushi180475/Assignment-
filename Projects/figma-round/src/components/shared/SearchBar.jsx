@@ -36,7 +36,7 @@ export default function SearchBar() {
           height: '40px',
           left: '0',
           borderRadius: '12px',
-          border: '1px solid #303030',
+          border: '1px solid var(--border-color)',
           background: 'transparent',
           cursor: 'pointer',
           display: 'flex',
@@ -46,11 +46,11 @@ export default function SearchBar() {
         }}
         title="Search (⌥F)"
         onMouseEnter={(e) => {
-          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.25)'
-          e.currentTarget.style.background = 'rgba(255, 255, 255, 0.04)'
+          e.currentTarget.style.borderColor = 'var(--border-hover)'
+          e.currentTarget.style.background = 'var(--bg-hover)'
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.borderColor = '#303030'
+          e.currentTarget.style.borderColor = 'var(--border-color)'
           e.currentTarget.style.background = 'transparent'
         }}
       >
@@ -59,7 +59,7 @@ export default function SearchBar() {
           height="20"
           viewBox="0 0 24 24"
           fill="none"
-          stroke="#8F8F8F"
+          stroke="var(--text-secondary)"
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -78,7 +78,7 @@ export default function SearchBar() {
         width: '100%',
         height: '40px',
         left: '0',
-        border: '1px solid #303030',
+        border: '1px solid var(--border-color)',
         borderRadius: '12px',
         background: 'transparent',
         boxSizing: 'border-box',
@@ -106,7 +106,7 @@ export default function SearchBar() {
           height="20"
           viewBox="0 0 24 24"
           fill="none"
-          stroke="#8F8F8F"
+          stroke="var(--text-secondary)"
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -126,7 +126,7 @@ export default function SearchBar() {
           background: 'transparent',
           border: 'none',
           outline: 'none',
-          color: '#ffffff',
+          color: 'var(--text-primary)',
           fontFamily: 'Inter',
           fontWeight: 500,
           fontSize: '16px',
@@ -163,14 +163,14 @@ export default function SearchBar() {
         >
           <path
             d="M2.5 11.875H5L10 3.125H12.5"
-            stroke="#484848"
+            stroke="var(--text-placeholder)"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
           <path
             d="M8.75 3.125H12.5"
-            stroke="#484848"
+            stroke="var(--text-placeholder)"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -189,7 +189,7 @@ export default function SearchBar() {
             fontWeight: 500,
             fontSize: '14px',
             lineHeight: '24px',
-            color: '#4D4D4D',
+            color: 'var(--text-placeholder)',
           }}
         >
           F
