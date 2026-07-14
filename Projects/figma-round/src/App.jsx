@@ -3,6 +3,7 @@ import AppLayout from './components/layout/AppLayout'
 import MyBacktestsPage from './pages/MyBacktestsPage'
 import WorkbenchPage from './pages/WorkbenchPage'
 import HomePage from './pages/HomePage'
+import WatchlistPage from './pages/WatchlistPage'
 import { SidebarProvider } from './context/SidebarContext'
 import { ThemeProvider } from './context/ThemeContext'
 
@@ -19,7 +20,7 @@ function App() {
               <Route path="/home" element={<HomePage />} />
               <Route path="/chats" element={<HomePage />} />
               <Route path="/projects" element={<HomePage />} />
-              <Route path="/watchlist" element={<HomePage />} />
+              <Route path="/watchlist" element={<WatchlistPage />} />
               <Route path="/workflows" element={<HomePage />} />
             </Route>
           </Routes>

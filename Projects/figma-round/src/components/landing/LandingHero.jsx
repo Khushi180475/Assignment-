@@ -1,6 +1,6 @@
 import HomePromptBox from '../workbench/HomePromptBox'
 
-export default function LandingHero() {
+export default function LandingHero({ onSubmit }) {
   return (
     <div className="landing-hero">
       <div className="landing-hero__copy">
@@ -11,9 +11,11 @@ export default function LandingHero() {
         </h1>
       </div>
 
-      <HomePromptBox onSubmit={() => {}} />
+      <div className="landing-hero__prompt">
+        <HomePromptBox onSubmit={onSubmit} />
+      </div>
 
-      <p className="landing-hero__caption">The AI that gets it right. Every single time.</p>
+      <p className="landing-hero__caption">AI that gets it right. Every single time.</p>
     </div>
   )
 }

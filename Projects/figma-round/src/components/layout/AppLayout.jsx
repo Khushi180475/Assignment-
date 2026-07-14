@@ -3,99 +3,37 @@ import Sidebar from '../sidebar/Sidebar'
 import ThemeToggle from '../shared/ThemeToggle'
 import useTheme from '../../context/useTheme'
 
+const LANDING_PATHS = ['/', '/workbench', '/home', '/chats', '/projects', '/watchlist', '/workflows']
+
 export default function AppLayout() {
   const location = useLocation()
   const { theme } = useTheme()
-  const isLandingPage = location.pathname === '/workbench' || location.pathname === '/' || ['/home', '/chats', '/projects', '/watchlist', '/workflows'].includes(location.pathname)
+  const isLandingPage = LANDING_PATHS.includes(location.pathname)
 
+  // The Figma frame is a screenshot of a desktop window, so its sage border,
+  // rounded corners and traffic-light dots are mockup chrome, not UI — the app
+  // itself fills the viewport.
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        height: '100vh',
-        overflow: 'hidden',
-        backgroundColor: 'var(--bg-app, #FAFAF8)',
-        position: 'relative',
-        transition: 'background-color 0.35s ease',
-      }}
-    >
+    <div className="app-frame">
       <Sidebar />
-      <div
-        style={{
-          flex: 1,
-          height: '100%',
-          background: 'transparent',
-          position: 'relative',
-          overflow: 'hidden',
-          transition: 'background-color 0.35s ease',
-        }}
-      >
-        <div
-          style={{
-            position: 'absolute',
-            top: '12px',
-            right: '16px',
-            zIndex: 20,
-          }}
-        >
-          <ThemeToggle />
-        </div>
 
-        {/* Figma Background Earth & Rectangle 14 Layer */}
+      <div className="app-main">
+        {/* On landing pages the toggle lives in the tab bar instead, so it
+            cannot land on top of the right pane's collapse button. */}
         {!isLandingPage && (
-          <div
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              pointerEvents: 'none',
-              zIndex: 0,
-              overflow: 'hidden',
-            }}
-          >
-            {/* Theme background image */}
-            <img
-              src={theme.backgroundImage}
-              alt=""
-              style={{
-                position: 'absolute',
-                inset: 0,
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                objectPosition: 'center',
-                opacity: 1,
-                transition: 'opacity 0.35s ease',
-              }}
-            />
-
-          {/* Rectangle 14 (Gradient overlay layout) */}
-          <div
-            style={{
-              position: 'absolute',
-              left: 0,
-              bottom: 0,
-              width: '100%',
-              height: '197px',
-              background: 'var(--gradient-overlay)',
-              opacity: 1,
-            }}
-          />
-        </div>
+          <div className="app-main__theme-toggle">
+            <ThemeToggle />
+          </div>
         )}
 
-        {/* Page Content Viewport */}
-        <div
-          style={{
-            position: 'relative',
-            zIndex: 1,
-            height: '100%',
-            overflow: 'hidden',
-          }}
-        >
+        {!isLandingPage && (
+          <div className="app-main__backdrop">
+            <img className="app-main__backdrop-image" src={theme.backgroundImage} alt="" />
+            <div className="app-main__backdrop-fade" />
+          </div>
+        )}
+
+        <div className="app-main__viewport">
           <Outlet />
         </div>
       </div>

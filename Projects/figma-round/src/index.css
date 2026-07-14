@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Old+Standard+TT&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Old+Standard+TT&family=Faustina:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Jomolhari&family=Lexend:wght@400&display=swap');
 
 :root {
@@ -13,7 +13,7 @@
   --text-muted: #444444;
   --accent: #ffffff;
   --sidebar-width: 280px;
-  --sidebar-collapsed-width: 60px;
+  --sidebar-collapsed-width: 55px; /* node 108:115 "menu-shrinked" */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
@@ -68,7 +68,7 @@
   --tab-inactive-color: #CACACA;
   --right-panel-bg: #F1F1F1;
   --right-panel-border: #DADADA;
-  --right-panel-glass: rgba(255, 255, 255, 0.18);
+  --right-panel-glass: rgba(252, 255, 249, 0.7);
   --right-panel-glass-border: rgba(255, 255, 255, 0.18);
   --hero-title-color: #7B8570;
   --hero-caption-color: #DCE5D3;
@@ -77,6 +77,75 @@
   --toggle-track-border: rgba(93, 107, 29, 0.25);
   --toggle-thumb-bg: #CADE6A;
   --toggle-icon-color: #5D6B1D;
+  --clock-text-color: rgba(94, 105, 85, 0.35);
+  --clock-divider-color: rgba(94, 105, 85, 0.35);
+  --clock-input-bg: rgba(237, 255, 214, 0.03);
+  --clock-input-border: rgba(255, 255, 255, 0.55);
+  --clock-input-text: rgba(94, 105, 85, 0.5);
+  --composer-icon: rgba(255, 255, 255, 0.85);
+  --composer-icon-hover: #FFFFFF;
+  --prompt-send-icon: #4A4A48;
+
+  /* Dashboard feed — Figma nodes 6:74 (spotlight) and 6:119 (upcoming events) */
+  --feed-heading: #7B8570;
+  --feed-date: #CACACA;
+  --card-bg: rgba(167, 180, 165, 0.05);
+  --card-border: #EEEEEE;
+  --card-title: #000000;
+  --card-desc: #A7A7A7;
+  --card-dot-bg: #FFFFFF;
+  --card-dot-border: #EDEDED;
+  --filter-bg: rgba(247, 245, 245, 0.25);
+  --filter-border: #EEEEEE;
+  --filter-label-grey: #B1B1B1;
+  --filter-label-olive: rgba(123, 133, 112, 0.5);
+  --filter-badge-bg: rgba(229, 229, 229, 0.45);
+  --filter-badge-grey: #000000;
+  --filter-badge-olive: #7B8570;
+  --spotlight-thumb-bg: #ECF0E9;
+  --spotlight-item-text: #5E6955;
+  --spotlight-overlay-text: #ECF6E0;
+  --spotlight-info-bg: rgba(253, 253, 253, 0.18);
+  --scroll-up-bg: #FFFFFF;
+  --scroll-up-stroke: #7B8570;
+  --feed-fade-start: rgba(252, 255, 249, 0);
+  --feed-fade-end: #FCFFF9;
+  --content-bg: #FCFFF9;
+  /* Watchlist (node 38:507) */
+  --watchlist-card-bg: rgba(255, 255, 255, 0.7);
+  --watchlist-muted: #B2B2B2;
+  --watchlist-muted-soft: rgba(178, 178, 178, 0.6);
+  --rail-separator: rgba(252, 255, 249, 0.35);
+  --rail-active-bg: #546047;
+  --rail-active-border: #FCFFF9;
+  /* The active rail chip's stroke is a gradient — bright top and bottom, fading
+     out at the middle of the vertical edges (sampled from the render). */
+  --rail-active-border-gradient: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.72) 0%,
+    rgba(255, 255, 255, 0.03) 50%,
+    rgba(255, 255, 255, 0.7) 100%
+  );
+  /* Right pane reads as a smooth vertical gradient in the design (the frosted
+     surface over a heavily blurred backdrop) — stops sampled from the render. */
+  --pane-gradient: linear-gradient(
+    180deg,
+    #E6E7E1 0%,
+    #D9DBD6 10%,
+    #D5DAD7 28%,
+    #CCD4CD 45%,
+    #C5CDC9 55%,
+    #C2CAC3 72%,
+    #BBC2BA 90%,
+    #ACB1A9 100%
+  );
+
+  /* Right-pane conversation — Figma node 6:256 */
+  --chat-bubble-bg: rgba(243, 255, 214, 0.5);
+  --chat-bubble-border: #EAFFC5;
+  --chat-bubble-text: #717C63;
+  --chat-body-text: #5E6955;
+  --chat-meta-text: rgba(94, 105, 85, 0.5);
 }
 
 [data-theme="light"] {
@@ -196,6 +265,70 @@ a {
   text-decoration: none;
 }
 
+/* The Figma frame is a screenshot of a desktop window — its sage border, 45px
+   corners and traffic-light dots are mockup chrome. The app fills the viewport. */
+.app-frame {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--bg-app);
+  transition: background-color 0.35s ease;
+}
+
+.app-main {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+}
+
+.app-main__theme-toggle {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  z-index: 20;
+}
+
+.app-main__backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.app-main__backdrop-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: opacity 0.35s ease;
+}
+
+.app-main__backdrop-fade {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 197px;
+  background: var(--gradient-overlay);
+}
+
+.app-main__viewport {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  overflow: hidden;
+}
+
 .bkg-glass {
   background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(12px);
@@ -203,12 +336,35 @@ a {
   border-radius: var(--radius-md);
 }
 
-/* Sidebar Nav active and inactive link polish pass */
+/* Sidebar nav — hover only affects non-active items, so the active link never
+   looks like it is stuck in a hover state. */
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: stretch;
+}
+
+/* Node 108:120 "group 1" — 30px items, ~33px apart down the rail. */
+.nav-list--rail {
+  align-items: center;
+  gap: 3.5px;
+}
+
 .nav-item {
-  color: var(--nav-inactive-color, #8F8F8F);
-  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 6px;
   border: 1px solid transparent;
-  transition: all 0.2s ease;
+  box-sizing: border-box;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--nav-inactive-color, #8F8F8F);
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .nav-item:hover:not(.active) {
@@ -220,6 +376,43 @@ a {
   background: var(--nav-active-bg);
   color: var(--nav-active-color);
   border-color: var(--nav-active-border);
+}
+
+.nav-item__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* Figma node 9:334 "group 1" — the shrunken menu rail: 40x30 items, and the
+   active one is a #546047 chip with a 0.8px #FCFFF9 border. */
+.nav-item--rail {
+  width: 40px;
+  height: 30px;
+  padding: 0;
+  justify-content: center;
+  gap: 0;
+  border-radius: 4px;
+  border: 0.8px solid transparent;
+  color: rgba(252, 255, 249, 0.7);
+}
+
+.nav-item--rail:hover:not(.active) {
+  background: rgba(252, 255, 249, 0.12);
+  color: var(--rail-active-border);
+}
+
+/* Gradient stroke: paint the fill on the padding box and the gradient on the
+   border box, so it still follows the 4px radius. */
+.nav-item--rail.active {
+  background:
+    linear-gradient(var(--rail-active-bg), var(--rail-active-bg)) padding-box,
+    var(--rail-active-border-gradient) border-box;
+  border: 0.8px solid transparent;
+  color: var(--rail-active-border);
 }
 
 /* Global webkit scrollbar overrides */
@@ -310,19 +503,50 @@ input.sidebar-search-input::placeholder {
   background: var(--bg-app);
 }
 
+/* Node 108:176 "Rectangle 855" — the main column is #FCFFF9, not the app bg. */
 .landing-page__main {
   flex: 1;
   min-width: 0;
+  position: relative;
   display: flex;
   flex-direction: column;
-  background: var(--bg-app);
+  background: var(--content-bg);
   box-shadow: 2px 2px 2.5px rgba(0, 0, 0, 0.08);
 }
 
+/* Figma node 6:234 "Rectangle 946" — fades the feed out at the bottom of the pane. */
+.landing-page__fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 167px;
+  background: linear-gradient(180deg, var(--feed-fade-start) 0%, var(--feed-fade-end) 100%);
+  pointer-events: none;
+}
+
+/* Figma modulates a layer's background blur by its own alpha, so the blur ramps
+   in with the gradient. A bare `backdrop-filter` instead blurs the whole 167px
+   band evenly, smearing cards at the top where nothing is covering them yet —
+   so the blur is masked to follow the same ramp. */
+.landing-page__fade::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 100%);
+  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0) 100%);
+}
+
+/* Node 9:392 "Group 1358" — 30px tall bar, labels 10px and 53px in. */
 .landing-tabs {
+  flex-shrink: 0;
   display: flex;
-  gap: 16px;
-  padding: 12px 20px;
+  align-items: center;
+  gap: 15px;
+  height: 30px;
+  padding: 0 10px;
   border-bottom: 1px solid var(--border-color);
   background: var(--header-bg);
   backdrop-filter: blur(18px);
@@ -333,7 +557,35 @@ input.sidebar-search-input::placeholder {
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 12px;
   font-weight: 600;
+  letter-spacing: -0.24px;
   color: var(--tab-inactive-color);
+}
+
+.landing-tabs__actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+/* Keep the toggle inside the 30px bar. */
+.landing-tabs .theme-toggle {
+  height: 22px;
+  padding: 2px 6px;
+  gap: 6px;
+}
+
+.landing-tabs .theme-toggle__track {
+  width: 30px;
+  height: 16px;
+}
+
+.landing-tabs .theme-toggle__thumb {
+  width: 12px;
+  height: 12px;
+}
+
+[data-app-theme='blue'] .landing-tabs .theme-toggle__thumb {
+  transform: translateX(14px);
 }
 
 .landing-tabs__item--active {
@@ -342,19 +594,35 @@ input.sidebar-search-input::placeholder {
 
 .landing-page__content {
   flex: 1;
+  min-height: 0;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Vertical rhythm from the design (offsets below the 30px tab bar): title 315,
+   prompt box 436, caption 523, scroll-up 626, news 660 — so the top of the feed
+   is already on screen before you scroll.
+
+   The design is drawn on a 1038px-tall artboard. Hard-coding 315px here would
+   eat most of a shorter browser window and push the news off screen, so the gap
+   is derived from the viewport instead: the hero block plus the scroll-up button
+   is a fixed 345px, and the news should start at 66.9% of the content height
+   (660/987 in the design). The content box is the viewport minus the 31px tab
+   bar, so 66.9vh - 366px reproduces the design's 315px on a 1038px-tall screen. */
+.landing-page__hero {
+  flex-shrink: 0;
+  display: flex;
   justify-content: center;
-  padding: 32px 24px 40px;
-  overflow: auto;
+  padding: clamp(24px, calc(66.9vh - 366px), 315px) 24px 0;
 }
 
 .landing-hero {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
-  width: min(730px, 100%);
+  width: min(430px, 100%);
 }
 
 .landing-hero__copy {
@@ -363,58 +631,905 @@ input.sidebar-search-input::placeholder {
   align-items: center;
 }
 
+/* Node 108:359 — PP Pangaia Medium, 22px / 28px, -0.22px, #7B8570.
+   PP Pangaia is a commercial Pangram Pangram face, so it is named first (used
+   if the viewer has it licensed) and Faustina Medium stands in: at the design's
+   own 22px it sets this line in 325px against Pangaia's 328px, so no size or
+   tracking distortion is needed to fit. */
 .landing-hero__title {
   margin: 0;
   text-align: center;
-  font-family: 'Old Standard TT', Georgia, serif;
-  font-size: clamp(22px, 2.2vw, 30px);
-  line-height: 1.25;
-  font-weight: 400;
+  font-family: 'PP Pangaia', 'Faustina', 'Old Standard TT', Georgia, serif;
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 500;
+  letter-spacing: -0.13px;
   color: var(--hero-title-color);
+  white-space: nowrap;
+}
+
+/* Node 9:562 sits 65px below the title block. */
+.landing-hero__prompt {
+  margin-top: 65px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .landing-hero__caption {
   margin: 0;
+  margin-top: 2px;
   text-align: center;
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 8px;
   font-weight: 500;
+  line-height: 28px;
+  letter-spacing: -0.32px;
   color: var(--hero-caption-color);
 }
 
+/* ── Dashboard feed (Figma nodes 6:74 + 6:119) ───────────────────────────── */
+
+/* Node 9:558 — 75px below the caption, 22px above the news feed. */
+.scroll-up-button {
+  flex-shrink: 0;
+  align-self: center;
+  display: flex;
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  margin: 75px 0 22px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0.85;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.scroll-up-button:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+.scroll-up-button svg {
+  transition: transform 0.25s ease;
+}
+
+.scroll-up-button--raised svg {
+  transform: rotate(180deg);
+}
+
+/* Node 9:396 "news" — the 894px group (240 + 54 gap + 600) stays centred in the
+   main column in both the open and collapsed chat states. */
+.dashboard-feed {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 54px;
+  padding: 0 24px 80px;
+  /* Tall enough that the chevron can lift the feed flush to the top of the
+     viewport rather than bottoming out partway. */
+  min-height: 100%;
+}
+
+.dashboard-feed__events {
+  width: 240px;
+  flex-shrink: 0;
+}
+
+.dashboard-feed__spotlight {
+  flex: 0 1 600px;
+  min-width: 0;
+  max-width: 600px;
+  container-type: inline-size;
+}
+
+.feed-section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  height: 24px;
+}
+
+.feed-section__title {
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.24px;
+  color: var(--feed-heading);
+}
+
+/* Watchlist headings are #000 rather than the feed's olive (node 38:507). */
+.feed-section__title--plain {
+  color: var(--text-primary);
+}
+
+/* ── Watchlist (Figma node 38:507) ───────────────────────────────────────── */
+
+.watchlist {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 54px;
+  padding: 40px 24px 80px;
+}
+
+.watchlist__search {
+  width: 239px;
+  flex-shrink: 0;
+}
+
+.watchlist__followed {
+  flex: 0 1 600px;
+  min-width: 0;
+  max-width: 600px;
+}
+
+/* "watchlist search" — 239x22 field */
+.company-search__field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 22px;
+  margin-top: 13px;
+  padding: 0 8px;
+  background: var(--bg-card);
+  border: 0.8px solid var(--card-border);
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+
+.company-search__icon {
+  flex-shrink: 0;
+  color: var(--watchlist-muted);
+}
+
+.company-search__input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 8px;
+  font-weight: 500;
+  line-height: 11px;
+  letter-spacing: -0.24px;
+  color: var(--text-primary);
+}
+
+.company-search__input::placeholder {
+  color: var(--watchlist-muted);
+  opacity: 1;
+}
+
+.company-search__clear {
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 7px;
+  font-weight: 500;
+  line-height: 11px;
+  letter-spacing: -0.21px;
+  color: var(--watchlist-muted-soft);
+}
+
+.company-search__clear:hover {
+  color: var(--watchlist-muted);
+}
+
+/* the 239x136 results surface below the field */
+.company-search__results {
+  height: 136px;
+  margin-top: 8px;
+  background: var(--bg-card);
+  border: 0.8px solid var(--card-border);
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+
+/* "Event Card 13" — 600x166 followed-company slot */
+.followed-card {
+  position: relative;
+  height: 166px;
+  margin-top: 13px;
+  background: var(--watchlist-card-bg);
+  border: 0.8px solid var(--card-border);
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+
+.followed-card__dots {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+@media (max-width: 1180px) {
+  .watchlist {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 32px;
+  }
+
+  .watchlist__search,
+  .watchlist__followed {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+/* Figma nodes 6:76 / 6:121 — filter pill */
+.filter-chip {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 11px;
+  width: 37px;
+  padding: 0 3px;
+  border: 0.4px solid var(--filter-border);
+  border-radius: 1px;
+  background: var(--filter-bg);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.filter-chip__badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 7px;
+  height: 7px;
+  border-radius: 0.3px;
+  background: var(--filter-badge-bg);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 5px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  line-height: 1;
+}
+
+.filter-chip__label {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 7px;
+  font-weight: 500;
+  letter-spacing: -0.28px;
+  line-height: 1;
+}
+
+.filter-chip__caret {
+  margin-left: auto;
+  transform: rotate(-90deg);
+}
+
+.filter-chip--grey .filter-chip__label,
+.filter-chip--grey .filter-chip__caret {
+  color: var(--filter-label-grey);
+}
+
+.filter-chip--grey .filter-chip__badge {
+  color: var(--filter-badge-grey);
+}
+
+.filter-chip--olive .filter-chip__label,
+.filter-chip--olive .filter-chip__caret {
+  color: var(--filter-label-olive);
+}
+
+.filter-chip--olive .filter-chip__badge {
+  color: var(--filter-badge-olive);
+}
+
+/* Figma node 6:119 — upcoming events */
+.upcoming-events__group {
+  margin-top: 13px;
+}
+
+.upcoming-events__date {
+  margin: 0 0 7px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.24px;
+  color: var(--feed-date);
+}
+
+.upcoming-events__list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Figma "Event Card" — 240x80 */
+.event-card {
+  position: relative;
+  display: flex;
+  gap: 8px;
+  height: 80px;
+  padding: 10px;
+  border: 0.8px solid var(--card-border);
+  border-radius: 2px;
+  background: var(--card-bg);
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.event-card:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-hover);
+}
+
+.event-card__thumb {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  border-radius: 1px;
+  object-fit: cover;
+}
+
+/* Node 108:320 — the hidden card still reserves its 80px slot. */
+.event-card-placeholder {
+  height: 80px;
+  flex-shrink: 0;
+}
+
+.event-card__body {
+  min-width: 0;
+  padding-top: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.event-card__title {
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  line-height: 14px;
+  letter-spacing: -0.36px;
+  color: var(--card-title);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.event-card__desc {
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 7px;
+  font-weight: 500;
+  line-height: 10px;
+  letter-spacing: -0.28px;
+  color: var(--card-desc);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.event-card__dots {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+/* Figma node 6:74 — spotlight */
+.spotlight__card {
+  display: flex;
+  gap: 14px;
+  margin-top: 13px;
+  padding: 10px;
+  border: 0.8px solid var(--card-border);
+  border-radius: 2px;
+  background: var(--card-bg);
+}
+
+.spotlight__feature {
+  position: relative;
+  margin: 0;
+  flex: 1 1 356px;
+  min-width: 0;
+  height: 232px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+/* Stack the card rather than crushing the 356x232 feature when the column is
+   narrow (e.g. while the main menu is expanded). */
+@container (max-width: 560px) {
+  .spotlight__card {
+    flex-direction: column;
+  }
+
+  .spotlight__feature {
+    flex: none;
+    width: 100%;
+  }
+
+  .spotlight__latest {
+    width: 100%;
+  }
+}
+
+.spotlight__feature-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.spotlight__info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 60px;
+  padding: 9px 10px;
+  background: var(--spotlight-info-bg);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.spotlight__info-title {
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 14px;
+  letter-spacing: -0.24px;
+  color: var(--spotlight-overlay-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.spotlight__info-meta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 5px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 6px;
+  font-weight: 500;
+  letter-spacing: -0.12px;
+  color: var(--spotlight-overlay-text);
+}
+
+.spotlight__info-dot {
+  width: 2.3px;
+  height: 2.3px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.spotlight__latest {
+  width: 208px;
+  flex-shrink: 0;
+}
+
+.spotlight__latest-title {
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 14px;
+  letter-spacing: -0.48px;
+  color: var(--feed-heading);
+}
+
+.spotlight__latest-list {
+  list-style: none;
+  margin: 26px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.spotlight__post {
+  display: flex;
+  gap: 8px;
+  height: 38px;
+  cursor: pointer;
+}
+
+.spotlight__post-thumb {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 2px;
+  background: var(--spotlight-thumb-bg);
+}
+
+.spotlight__post-body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.spotlight__post-title {
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 8px;
+  font-weight: 600;
+  line-height: 9px;
+  letter-spacing: -0.32px;
+  color: var(--spotlight-item-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.spotlight__post-date {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 5px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  color: var(--spotlight-item-text);
+}
+
+@media (max-width: 1180px) {
+  .dashboard-feed {
+    flex-direction: column;
+    align-items: stretch;
+    /* Once stacked, centring would push the feed down inside its min-height. */
+    justify-content: flex-start;
+    gap: 32px;
+    padding: 0 24px 64px;
+  }
+
+  .dashboard-feed__events,
+  .dashboard-feed__spotlight {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .spotlight__card {
+    flex-direction: column;
+  }
+
+  .spotlight__feature {
+    flex: none;
+    width: 100%;
+  }
+
+  .spotlight__latest {
+    width: 100%;
+  }
+}
+
 .landing-sidepanel {
-  width: 324px;
+  width: 375px;
   flex-shrink: 0;
   position: relative;
   overflow: hidden;
-  border-left: 1px solid var(--right-panel-glass-border);
-  background: var(--right-panel-glass);
-  backdrop-filter: blur(52px);
-  -webkit-backdrop-filter: blur(52px);
+  border-left: 1px solid var(--right-panel-border);
+  background: var(--pane-gradient);
+  transition: width 0.3s ease, background 0.35s ease;
 }
 
-.landing-sidepanel__image,
-.landing-sidepanel__glass {
+/* Node 9:579 "right side chat" — collapsed to the 30px rail. */
+.landing-sidepanel--collapsed {
+  width: 30px;
+}
+
+.right-panel-clock {
   position: absolute;
   inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 78px 22px 24px;
+}
+
+.right-panel-clock__glow {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0) 68%);
+}
+
+/* Node 6:260 (open pane, 21px in) / node 9:585 (rail, 8px in) */
+.fullscreen-button {
+  position: absolute;
+  top: 14px;
+  left: 21px;
+  z-index: 2;
+  display: flex;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--feed-heading);
+  cursor: pointer;
+  opacity: 0.9;
+  transition: opacity 0.2s ease;
+}
+
+.fullscreen-button:hover {
+  opacity: 1;
+}
+
+.right-panel-clock--collapsed {
+  padding: 0;
+}
+
+.right-panel-clock--collapsed .fullscreen-button {
+  left: 8px;
+}
+
+/* In the rail the orbs are clipped to a soft glow at the top and bottom edges. */
+.right-panel-clock--collapsed .right-panel-clock__glow--top,
+.right-panel-clock--collapsed .right-panel-clock__glow--bottom {
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+}
+
+.right-panel-clock__glow--top {
+  top: -70px;
+  right: -70px;
+  width: 210px;
+  height: 210px;
+}
+
+.right-panel-clock__glow--bottom {
+  bottom: -70px;
+  right: -70px;
+  width: 210px;
+  height: 210px;
+}
+
+.right-panel-clock__dial {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.right-panel-clock__date {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.24px;
+  color: var(--clock-text-color);
+  line-height: 1;
+}
+
+.right-panel-clock__time {
+  margin-top: 20px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 55px;
+  font-weight: 600;
+  letter-spacing: -3.3px;
+  color: var(--clock-text-color);
+  line-height: 1;
+}
+
+.right-panel-clock__divider {
+  margin-top: 16px;
+  width: 90px;
+  height: 1px;
+  background: var(--clock-divider-color);
+}
+
+/* Figma node 6:256 — the conversation between the clock and the composer. */
+.right-panel-clock__scroll {
+  flex: 1;
+  min-height: 0;
+  margin-top: 30px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+.right-panel-clock__scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.chat-thread {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 8px;
+}
+
+.chat-thread__turn {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-thread__turn--user {
+  align-items: flex-end;
+}
+
+.chat-thread__turn--assistant {
+  align-items: flex-start;
+  gap: 4px;
+}
+
+/* Figma nodes 6:299 / 6:304 / 6:309 — user bubble */
+.chat-thread__bubble {
+  margin: 0;
+  max-width: 178px;
+  padding: 5px 8px;
+  border: 0.5px solid var(--chat-bubble-border);
+  border-radius: 5px;
+  background: var(--chat-bubble-bg);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 8px;
+  font-weight: 500;
+  line-height: 12px;
+  letter-spacing: -0.16px;
+  color: var(--chat-bubble-text);
+}
+
+.chat-thread__time {
+  margin-top: 4px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 6px;
+  font-weight: 500;
+  letter-spacing: -0.18px;
+  color: var(--chat-body-text);
+}
+
+/* Figma node 6:274 — "Thought for Xs" label */
+.chat-thread__thought {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--chat-meta-text);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 7px;
+  font-weight: 500;
+  letter-spacing: -0.14px;
+  line-height: 12px;
+}
+
+.chat-thread__bulb {
+  flex-shrink: 0;
+}
+
+.chat-thread__body {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding-left: 2px;
+  max-width: 260px;
+}
+
+.chat-thread__paragraph,
+.chat-thread__bullets {
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 8px;
+  font-weight: 500;
+  line-height: 12px;
+  letter-spacing: -0.16px;
+  color: var(--chat-body-text);
+}
+
+.chat-thread__bullet {
+  display: block;
+}
+
+.chat-thread__ticker {
+  text-decoration: underline;
+  text-underline-position: from-font;
+}
+
+/* Figma node 6:314 — composer */
+.right-panel-clock__input {
+  position: relative;
+  flex-shrink: 0;
+  height: 60px;
+  margin-top: 12px;
+  border-radius: 8px;
+  background: var(--clock-input-bg);
+  border: 1px solid var(--clock-input-border);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  box-sizing: border-box;
+}
+
+.right-panel-clock__input-label {
+  position: absolute;
+  top: 8px;
+  left: 9px;
+  right: 9px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: -0.16px;
+  color: var(--clock-input-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.right-panel-clock__attach,
+.right-panel-clock__send {
+  position: absolute;
+  top: 33px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.right-panel-clock__attach,
+.right-panel-clock__send {
+  color: var(--composer-icon);
+  transition: color 0.2s ease;
+}
+
+.right-panel-clock__attach:hover,
+.right-panel-clock__send:hover {
+  color: var(--composer-icon-hover);
+}
+
+.right-panel-clock__attach {
+  left: 9px;
+  width: 19.74px;
+  height: 19.74px;
+}
+
+.right-panel-clock__send {
+  right: 8px;
+  width: 19.35px;
+  height: 20.13px;
+}
+
+.right-panel-clock__attach svg,
+.right-panel-clock__send svg {
   width: 100%;
   height: 100%;
 }
 
-.landing-sidepanel__image {
-  object-fit: cover;
-  object-position: center;
+@media (max-width: 900px) {
+  .right-panel-clock {
+    padding: 20px 16px 16px;
+  }
+
+  .right-panel-clock__glow--top,
+  .right-panel-clock__glow--bottom {
+    display: none;
+  }
+
+  .right-panel-clock__time {
+    margin-top: 8px;
+    font-size: 40px;
+  }
+
+  .right-panel-clock__divider {
+    margin-top: 10px;
+  }
+
+  .right-panel-clock__scroll {
+    margin-top: 16px;
+  }
 }
 
-.landing-sidepanel__glass {
-  background: var(--right-panel-glass);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-@media (max-width: 1080px) {
+@media (max-width: 1180px) {
   .landing-sidepanel {
-    width: 280px;
+    width: 320px;
   }
 }
 
@@ -425,33 +1540,48 @@ input.sidebar-search-input::placeholder {
 
   .landing-sidepanel {
     width: 100%;
-    height: 220px;
+    height: 460px;
+    flex-shrink: 0;
     border-left: 0;
     border-top: 1px solid var(--right-panel-glass-border);
   }
 
-  .landing-page__content {
-    align-items: flex-start;
-    padding-top: 48px;
+  .landing-sidepanel--collapsed {
+    width: 100%;
+    height: 30px;
+  }
+
+  .landing-page__hero {
+    padding-top: 120px;
   }
 }
 
 @media (max-width: 560px) {
-  .landing-page__content {
-    padding: 24px 16px 28px;
+  .landing-page__hero {
+    padding: 80px 16px 0;
   }
 
   .landing-hero {
     gap: 24px;
   }
 
+  /* The single-line measure is 328px wide, so let it wrap on narrow screens. */
   .landing-hero__title {
-    font-size: 22px;
+    font-size: 20px;
+    white-space: normal;
+  }
+
+  .landing-hero__prompt {
+    margin-top: 40px;
   }
 
   .landing-tabs {
     padding: 10px 16px;
     gap: 12px;
+  }
+
+  .scroll-up-button {
+    margin: 32px 0 24px;
   }
 }
 

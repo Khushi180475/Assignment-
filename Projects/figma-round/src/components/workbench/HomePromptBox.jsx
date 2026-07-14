@@ -34,6 +34,7 @@ export default function HomePromptBox({ onSubmit }) {
     >
       {/* Input area */}
       <input
+        className="prompt-input"
         type="text"
         placeholder="Add prompt instructions"
         value={inputValue}
@@ -43,17 +44,18 @@ export default function HomePromptBox({ onSubmit }) {
         onBlur={() => setIsFocused(false)}
         style={{
           position: 'absolute',
-          top: '12px',
-          left: '16px',
-          width: 'calc(100% - 32px)',
+          top: '7px',
+          left: '13px',
+          width: 'calc(100% - 26px)',
           height: '24px',
           background: 'transparent',
           border: 'none',
           outline: 'none',
           color: 'var(--text-primary)',
           fontFamily: 'Inter, system-ui, sans-serif',
-          fontWeight: '400',
-          fontSize: '11px',
+          fontWeight: '500',
+          fontSize: '8px',
+          letterSpacing: '-0.16px',
         }}
       />
 
@@ -71,18 +73,19 @@ export default function HomePromptBox({ onSubmit }) {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          {/* Attach Button */}
+          {/* Attach Button — node 108:350, a light 14px "+" glyph. */}
           <button
             onClick={() => alert('Attachment upload')}
             style={{
-              width: '16px',
-              height: '16px',
+              width: '20px',
+              height: '20px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               color: 'var(--text-primary)',
-              fontSize: '16px',
+              fontSize: '14px',
               fontWeight: '400',
+              lineHeight: 1,
               cursor: 'pointer',
               border: 'none',
               background: 'transparent',
@@ -99,12 +102,13 @@ export default function HomePromptBox({ onSubmit }) {
             style={{
               padding: '4px 10px',
               backgroundColor: 'var(--prompt-chip-bg)',
-              border: '1px solid var(--prompt-chip-border)',
-              borderRadius: '4px',
-              color: 'var(--text-secondary)',
+              border: '0.8px solid var(--prompt-chip-border)',
+              borderRadius: '2.5px',
+              color: 'var(--text-primary)',
               fontFamily: 'Inter, system-ui, sans-serif',
-              fontSize: '9px',
+              fontSize: '7.5px',
               fontWeight: '500',
+              letterSpacing: '-0.15px',
               cursor: 'pointer',
             }}
           >
@@ -112,32 +116,29 @@ export default function HomePromptBox({ onSubmit }) {
           </button>
         </div>
 
-        {/* Send Button */}
+        {/* Send Button — node 108:356: an outlined rounded square with a play
+            glyph, the same control as the side-pane composer. */}
         <button
           onClick={handleSend}
           disabled={!inputValue.trim()}
           style={{
-            width: '20px',
-            height: '20px',
+            width: '19.35px',
+            height: '20.13px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: 'var(--text-primary)',
+            color: 'var(--prompt-send-icon)',
             cursor: inputValue.trim() ? 'pointer' : 'not-allowed',
-            opacity: inputValue.trim() ? 1 : 0.3,
+            opacity: inputValue.trim() ? 1 : 0.55,
             border: 'none',
             background: 'transparent',
             padding: 0,
           }}
           title="Send"
         >
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-            <path d="M8 5v14l11-7z" />
+          <svg width="100%" height="100%" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <rect x="0.4" y="0.4" width="19.2" height="19.2" rx="3.2" stroke="currentColor" strokeWidth="0.8" />
+            <path d="M7.8 6.2 13.4 10l-5.6 3.8V6.2Z" stroke="currentColor" strokeWidth="0.9" strokeLinejoin="round" />
           </svg>
         </button>
       </div>

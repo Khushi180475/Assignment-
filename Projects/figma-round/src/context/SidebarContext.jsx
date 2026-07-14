@@ -4,7 +4,9 @@ import { createContext, useState, useContext } from 'react'
 const SidebarContext = createContext(null)
 
 export function SidebarProvider({ children }) {
-  const [sidebarState, setSidebarState] = useState('main')
+  // The design (node 108:115 "menu-shrinked") opens on the 55px rail, so the
+  // rest of the page lands on its intended positions.
+  const [sidebarState, setSidebarState] = useState('collapsed')
 
   const toggleSidebar = () => {
     setSidebarState((state) => (state === 'main' ? 'collapsed' : 'main'))

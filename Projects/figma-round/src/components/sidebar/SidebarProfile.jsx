@@ -1,4 +1,48 @@
 export default function SidebarProfile({ collapsed }) {
+  // Collapsed, the design (nodes 108:118 / 108:119) shows a 40x42 #323232 chip
+  // holding a 30x30 avatar — no divider above it.
+  if (collapsed) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <button
+          style={{
+            width: '40px',
+            height: '42px',
+            borderRadius: '6px',
+            backgroundColor: '#323232',
+            border: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            padding: 0,
+          }}
+          title="Chirag S Jalade"
+          aria-label="Account"
+        >
+          <span
+            style={{
+              width: '30px',
+              height: '30px',
+              borderRadius: '3px',
+              backgroundColor: '#E3E3E3',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontFamily: 'Inter, system-ui, sans-serif',
+              fontSize: '11px',
+              fontWeight: '600',
+              color: '#000000',
+              lineHeight: 1,
+            }}
+          >
+            CJ
+          </span>
+        </button>
+      </div>
+    )
+  }
+
   return (
     <div
       style={{
@@ -7,7 +51,7 @@ export default function SidebarProfile({ collapsed }) {
         display: 'flex',
         alignItems: 'center',
         gap: '12px',
-        justifyContent: collapsed ? 'center' : 'flex-start',
+        justifyContent: 'flex-start',
         boxSizing: 'border-box',
       }}
     >

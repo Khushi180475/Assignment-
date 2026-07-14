@@ -1,3 +1,5 @@
+import flashLogoMark from '../../assets/flashLogo.png'
+
 export default function FlashLogo({ collapsed }) {
   return (
     <div
@@ -10,30 +12,24 @@ export default function FlashLogo({ collapsed }) {
         opacity: 1,
       }}
     >
-      {/* 28x28px Flat Dark Rounded Square */}
+      {/* Figma node 1:48 "Flash Logo" composited export */}
       <div
         style={{
           width: '28px',
           height: '28px',
-          backgroundColor: '#1a1a1a',
           borderRadius: '8px',
+          overflow: 'hidden',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           flexShrink: 0,
         }}
       >
-        <span
-          style={{
-            color: '#ffffff',
-            fontSize: '14px',
-            fontWeight: 'bold',
-            fontFamily: 'Inter, system-ui, sans-serif',
-            lineHeight: '1',
-          }}
-        >
-          F
-        </span>
+        <img
+          src={flashLogoMark}
+          alt="Flash"
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        />
       </div>
 
       {/* Brand Text */}

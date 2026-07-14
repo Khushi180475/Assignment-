@@ -92,7 +92,7 @@ export default function Sidebar() {
   return (
     <div
       style={{
-        height: '100vh',
+        height: '100%',
         borderRight: '1px solid var(--border-color)',
         width: isCollapsed ? 'var(--sidebar-collapsed-width)' : 'var(--sidebar-width)',
         transition: 'width 0.25s ease',
@@ -145,28 +145,31 @@ export default function Sidebar() {
         }}
       />
 
-      {/* Main Layout Flow Container */}
+      {/* Main Layout Flow Container.
+          Collapsed, the rail follows node 108:115: logo at 60, nav at 179,
+          separator at 363, recents at 407, profile at 935 — and no search. */}
       <div
+        className={isCollapsed ? 'sidebar-flow sidebar-flow--rail' : 'sidebar-flow'}
         style={{
           display: 'flex',
           flexDirection: 'column',
           height: '100%',
-          padding: isCollapsed ? '0 10px 12px 10px' : '0 20px 12px 20px',
+          padding: isCollapsed ? '0 7px 12px 7px' : '0 20px 12px 20px',
           boxSizing: 'border-box',
           position: 'relative',
           zIndex: 1,
         }}
       >
         {/* Spacer to push down the flow items for the absolutely positioned logo header */}
-        <div style={{ height: '66px', flexShrink: 0 }} />
+        <div style={{ height: isCollapsed ? '179px' : '66px', flexShrink: 0 }} />
 
         {/* Logo and Toggle Header */}
         <div
           style={{
             position: 'absolute',
-            top: '24px',
-            left: isCollapsed ? '15px' : '20px',
-            right: isCollapsed ? '15px' : '20px',
+            top: isCollapsed ? '60px' : '24px',
+            left: isCollapsed ? '12px' : '20px',
+            right: isCollapsed ? '12px' : '20px',
             height: '30px',
             display: 'flex',
             alignItems: 'center',
@@ -211,26 +214,23 @@ export default function Sidebar() {
           )}
         </div>
 
-        {/* Search Bar Group 5 */}
-        <div
-          style={{
-            height: '40px',
-            marginBottom: isCollapsed ? '12px' : '20px',
-            position: 'relative',
-          }}
-        >
-          <SearchBar />
-        </div>
+        {/* Search Bar Group 5 — the design's rail has no search affordance. */}
+        {!isCollapsed && (
+          <>
+            <div style={{ height: '40px', marginBottom: '20px', position: 'relative' }}>
+              <SearchBar />
+            </div>
 
-        {/* Divider 1 */}
-        <div
-          style={{
-            height: '1px',
-            backgroundColor: 'var(--border-color)',
-            margin: '0',
-            marginBottom: isCollapsed ? '12px' : '20px',
-          }}
-        />
+            {/* Divider 1 */}
+            <div
+              style={{
+                height: '1px',
+                backgroundColor: 'var(--border-color)',
+                marginBottom: '20px',
+              }}
+            />
+          </>
+        )}
 
         {/* WORKSPACE Section */}
         <div
@@ -259,57 +259,35 @@ export default function Sidebar() {
               Workspace
             </div>
           )}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', alignItems: isCollapsed ? 'center' : 'stretch' }}>
+          <div className={`nav-list${isCollapsed ? ' nav-list--rail' : ''}`}>
             {workspaceLinks.map((link) => (
               <NavLink
                 key={link.label}
                 to={link.path}
-                style={({ isActive }) => ({
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: isCollapsed ? 'center' : 'flex-start',
-                  padding: isCollapsed ? '0' : '6px 12px',
-                  width: isCollapsed ? '40px' : 'auto',
-                  height: isCollapsed ? '40px' : 'auto',
-                  textDecoration: 'none',
-                  transition: 'all 0.2s ease',
-                  fontSize: '13px',
-                  fontWeight: '500',
-                  boxSizing: 'border-box',
-                  borderRadius: '6px',
-                  backgroundColor: isActive 
-                    ? (isCollapsed ? 'rgba(255, 255, 255, 0.15)' : 'var(--nav-active-bg)') 
-                    : 'transparent',
-                  color: isCollapsed 
-                    ? (isActive ? '#FFFFFF' : 'rgba(255, 255, 255, 0.6)') 
-                    : (isActive ? 'var(--nav-active-color)' : 'var(--nav-inactive-color)'),
-                  border: isCollapsed ? 'none' : '1px solid transparent',
-                  borderColor: isActive && !isCollapsed ? 'var(--nav-active-border)' : 'transparent',
-                })}
-                className="nav-item"
+                className={`nav-item${isCollapsed ? ' nav-item--rail' : ''}`}
                 title={isCollapsed ? link.label : undefined}
               >
-                <span
-                  style={{
-                    fontSize: '16px',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: '16px',
-                    height: '16px',
-                    marginRight: isCollapsed ? '0' : '8px',
-                  }}
-                >
-                  {link.icon}
-                </span>
+                <span className="nav-item__icon">{link.icon}</span>
                 {!isCollapsed && <span>{link.label}</span>}
               </NavLink>
             ))}
           </div>
         </div>
 
-        {/* Separator line */}
-        <div style={{ borderBottom: '1px solid var(--border-color)', margin: '12px 8px' }} />
+        {/* Separator line — node 108:155, 30px wide, 363px down the rail. */}
+        <div
+          style={
+            isCollapsed
+              ? {
+                  width: '30px',
+                  height: '1px',
+                  alignSelf: 'center',
+                  backgroundColor: 'var(--rail-separator)',
+                  margin: '20px 0 43px',
+                }
+              : { borderBottom: '1px solid var(--border-color)', margin: '12px 8px' }
+          }
+        />
 
         {/* RECENTS Section */}
         <div
@@ -338,59 +316,26 @@ export default function Sidebar() {
               Recents
             </div>
           )}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', alignItems: isCollapsed ? 'center' : 'stretch' }}>
+          <div className={`nav-list${isCollapsed ? ' nav-list--rail' : ''}`}>
             {recentsLinks.map((link) => (
               <NavLink
                 key={link.label}
                 to={link.path}
-                style={({ isActive }) => ({
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: isCollapsed ? 'center' : 'flex-start',
-                  padding: isCollapsed ? '0' : '6px 12px',
-                  width: isCollapsed ? '40px' : 'auto',
-                  height: isCollapsed ? '40px' : 'auto',
-                  textDecoration: 'none',
-                  transition: 'all 0.2s ease',
-                  fontSize: '13px',
-                  fontWeight: '500',
-                  boxSizing: 'border-box',
-                  borderRadius: '6px',
-                  backgroundColor: isActive 
-                    ? (isCollapsed ? 'rgba(255, 255, 255, 0.15)' : 'var(--nav-active-bg)') 
-                    : 'transparent',
-                  color: isCollapsed 
-                    ? (isActive ? '#FFFFFF' : 'rgba(255, 255, 255, 0.6)') 
-                    : (isActive ? 'var(--nav-active-color)' : 'var(--nav-inactive-color)'),
-                  border: isCollapsed ? 'none' : '1px solid transparent',
-                  borderColor: isActive && !isCollapsed ? 'var(--nav-active-border)' : 'transparent',
-                })}
-                className="nav-item"
+                className={`nav-item${isCollapsed ? ' nav-item--rail' : ''}`}
                 title={isCollapsed ? link.label : undefined}
               >
-                <span
-                  style={{
-                    fontSize: '16px',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: '16px',
-                    height: '16px',
-                    marginRight: isCollapsed ? '0' : '8px',
-                  }}
-                >
-                  {link.icon}
-                </span>
+                <span className="nav-item__icon">{link.icon}</span>
                 {!isCollapsed && <span>{link.label}</span>}
               </NavLink>
             ))}
           </div>
         </div>
 
-        {/* Profile Group */}
+        {/* Profile Group — node 108:118 sits 935px down the 1018px rail. */}
         <div
           style={{
             marginTop: 'auto',
+            marginBottom: isCollapsed ? '29px' : 0,
             width: '100%',
             boxSizing: 'border-box',
             zIndex: 10,
