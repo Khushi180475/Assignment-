@@ -7,8 +7,8 @@ import { defineConfig, globalIgnores } from 'eslint/config'
 export default defineConfig([
   globalIgnores(['dist']),
   {
-    // Config files run in Node, not the browser.
-    files: ['*.config.js'],
+    // Config files and serverless functions run in Node, not the browser.
+    files: ['*.config.js', 'api/**/*.js'],
     languageOptions: { globals: globals.node },
   },
   {

@@ -50,29 +50,44 @@ interface GNewsResponse {
   articles?: GNewsArticle[]
 }
 
-const ENDPOINT = 'https://gnews.io/api/v4/top-headlines'
+// Production talks to our own same-origin serverless proxy (src: api/news.js):
+// GNews's free tier only allows browser CORS from localhost, so a deployed
+// domain must reach GNews server-side. In dev we call GNews directly, which is
+// allowed from localhost and keeps `bun run dev` working without a proxy.
+const PROXY_ENDPOINT = '/api/news'
+const GNEWS_ENDPOINT = 'https://gnews.io/api/v4/top-headlines'
 const REQUEST_TIMEOUT_MS = 8000
 const ARTICLE_COUNT = 5 // 1 featured + 4 latest
 
 const env = import.meta.env as Record<string, string | undefined>
+const IS_PROD = Boolean(import.meta.env.PROD)
 const API_KEY = env.VITE_GNEWS_API_KEY?.trim()
 const CATEGORY = env.VITE_GNEWS_CATEGORY?.trim() || 'business'
 const LANG = env.VITE_GNEWS_LANG?.trim() || 'en'
 
-/** True when a live fetch is possible (a key exists and mock mode is off). */
+/**
+ * True when a live fetch should be attempted (mock mode off).
+ * - Production: always try the proxy; if the server has no key or the request
+ *   fails, the caller falls back to mock.
+ * - Development: only if a client key exists for the direct GNews call.
+ */
 export function isNewsApiConfigured(): boolean {
-  const forceMock = env.VITE_USE_MOCK_NEWS === 'true'
-  return Boolean(API_KEY) && !forceMock
+  if (env.VITE_USE_MOCK_NEWS === 'true') return false
+  return IS_PROD || Boolean(API_KEY)
 }
 
 function buildRequestUrl(): string {
+  if (IS_PROD) {
+    // Same-origin proxy — no CORS, key stays server-side.
+    return `${PROXY_ENDPOINT}?max=${ARTICLE_COUNT}`
+  }
   const params = new URLSearchParams({
     category: CATEGORY,
     lang: LANG,
     max: String(ARTICLE_COUNT),
     apikey: API_KEY ?? '',
   })
-  return `${ENDPOINT}?${params.toString()}`
+  return `${GNEWS_ENDPOINT}?${params.toString()}`
 }
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
