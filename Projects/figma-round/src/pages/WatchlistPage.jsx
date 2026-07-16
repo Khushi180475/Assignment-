@@ -1,15 +1,11 @@
-import LandingSidePanel from '../components/landing/LandingSidePanel'
 import LandingTabs from '../components/landing/LandingTabs'
 import CompanySearch from '../components/watchlist/CompanySearch'
 import FollowedCompanies from '../components/watchlist/FollowedCompanies'
-import { useState } from 'react'
 
-// Figma node 38:507 "Flash Dashboard" (Watchlist): the same two-column grid the
-// home feed uses — a 239px search column beside a 600px followed-companies
-// column — under a Home / Chat / History tab bar.
+// Figma node 38:507 (Watchlist): a 239px search column beside a 600px
+// followed-companies column, under a Home / Chat / History tab bar.
+// No right-hand chat pane on this page — the content spans the full width.
 export default function WatchlistPage() {
-  const [isChatCollapsed, setIsChatCollapsed] = useState(false)
-
   return (
     <div className="landing-page">
       <div className="landing-page__main">
@@ -26,11 +22,6 @@ export default function WatchlistPage() {
           </div>
         </div>
       </div>
-
-      <LandingSidePanel
-        collapsed={isChatCollapsed}
-        onToggleCollapsed={() => setIsChatCollapsed((value) => !value)}
-      />
     </div>
   )
 }

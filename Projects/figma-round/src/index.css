@@ -1149,6 +1149,65 @@ input.sidebar-search-input::placeholder {
   flex-shrink: 0;
   border-radius: 2px;
   background: var(--spotlight-thumb-bg);
+  overflow: hidden;
+}
+
+/* Real thumbnail fills the existing 38x38 box; the gray background remains the
+   placeholder for missing images. Size and radius are unchanged. */
+.spotlight__post-thumb-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* News cards link out to the source article. display:contents keeps the anchor
+   layout-transparent, so the design is byte-identical to the mock version. */
+.spotlight-link {
+  display: contents;
+  color: inherit;
+  text-decoration: none;
+}
+
+.spotlight-link--feature {
+  cursor: pointer;
+}
+
+/* Loading skeleton — reuses the exact box sizes, only animates a shimmer, so the
+   layout never shifts between loading and loaded. */
+.spotlight__feature.is-loading,
+.spotlight__post-thumb.is-loading,
+.spotlight__post-title.is-loading {
+  background-image: linear-gradient(
+    90deg,
+    var(--spotlight-thumb-bg) 0%,
+    rgba(0, 0, 0, 0.04) 50%,
+    var(--spotlight-thumb-bg) 100%
+  );
+  background-size: 200% 100%;
+  animation: spotlight-shimmer 1.2s ease-in-out infinite;
+}
+
+.spotlight__post-title.is-loading {
+  min-height: 9px;
+  border-radius: 2px;
+}
+
+@keyframes spotlight-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spotlight__feature.is-loading,
+  .spotlight__post-thumb.is-loading,
+  .spotlight__post-title.is-loading {
+    animation: none;
+  }
 }
 
 .spotlight__post-body {
@@ -1308,8 +1367,12 @@ input.sidebar-search-input::placeholder {
   line-height: 1;
 }
 
+/* Figma gives the time a 12px line-height with 55px glyphs, so they overflow
+   the text box symmetrically. Matching its box top would sit the digits ~9px
+   low, so these offsets are set from the rendered glyphs: 107..148, with the
+   rule pinned at 181 — all measured from the pane's top edge. */
 .right-panel-clock__time {
-  margin-top: 20px;
+  margin-top: 11px;
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 55px;
   font-weight: 600;
@@ -1319,7 +1382,7 @@ input.sidebar-search-input::placeholder {
 }
 
 .right-panel-clock__divider {
-  margin-top: 16px;
+  margin-top: 25px;
   width: 90px;
   height: 1px;
   background: var(--clock-divider-color);
